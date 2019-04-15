@@ -13,7 +13,7 @@ print('Number of rows =', len(train))
 
 print(spacer(), 'Counts', spacer())
 positive_tweets = train[train['label'] == 0]
-print('Positive labels:', len(positive_tweets)) # we found __no__ vvvv
+print('Positive labels:', len(positive_tweets)) # we found __no__ sexist/racial remarks
 negative_tweets = train[train['label'] == 1]
 print('Negative labels:', len(negative_tweets)) # we found sexist/racial remarks
 print('Ratio (p:n):', len(positive_tweets)/len(negative_tweets))
@@ -27,17 +27,24 @@ train['word_count'] = train['tweet'].apply(lambda s: len(str(s).split(' ')))
 print(train[['tweet', 'word_count']].head())
 
 
-## 1.1a My experiment: average_word_length
+## 1.1a/1.3 My experiment: average_word_length
 big_break()
 import functools
 
 def average_word_length(tweet: str):
     split = str(tweet).split(' ')
     num_words = len(split) # roughly. Punctuation isn't a concern
-    avg = functools.reduce(lambda a,b: a + b, (len(s) for s in split), 0) / num_words
+    avg = sum((len(s) for s in split)) / num_words
     return avg
 
 train['average_word_length'] = train['tweet'].apply(average_word_length)
 
 print("Added average word length. Let's see our new features")
+print(train.head())
+
+## 1.2 Character count
+
+train['char_count'] = train['tweet'].str.len()
+
+print('Added character count')
 print(train.head())
