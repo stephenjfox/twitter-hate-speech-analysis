@@ -48,3 +48,25 @@ train['char_count'] = train['tweet'].str.len()
 
 print('Added character count')
 print(train.head())
+
+
+## 1.4 Number of stopwords
+big_break()
+
+### start: mandatory install
+import nltk
+nltk.download('stopwords')
+### end: mandatory install
+
+from nltk.corpus import stopwords
+stop = stopwords.words('english')
+
+### stop words count
+train['stopwords_count'] = train['tweet'].apply(lambda s: len([x for x in s.split() if x in stop]))
+print('Added stop words count')
+print(train.head())
+
+### [TODO]: FIXME Why doesn't this work? I should be able to see the words as a list-columns...
+# __test_stop_words_sample = train['tweet'].apply(lambda tweet: [x for x in tweet.split() if x in stop])
+# print('Sampling some stop words')
+# print(pd.concat([train, __test_stop_words_sample]).head())
