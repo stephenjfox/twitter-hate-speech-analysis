@@ -54,6 +54,7 @@ print(train.head())
 big_break()
 
 ### start: mandatory install
+### [TODO]: read the NLTK api and figure
 import nltk
 nltk.download('stopwords')
 ### end: mandatory install
@@ -70,3 +71,17 @@ print(train.head())
 # __test_stop_words_sample = train['tweet'].apply(lambda tweet: [x for x in tweet.split() if x in stop])
 # print('Sampling some stop words')
 # print(pd.concat([train, __test_stop_words_sample]).head())
+### FIXME: see above
+
+## 1.5 Number of hashtags
+
+train['hashtag_count'] = train['tweet'].apply(lambda tweet: len([x for x in tweet.split() if x.startswith('#')]))
+
+print('Added hashtag count')
+print(train[['tweet', 'hashtag_count']].head())
+
+## 1.5a Me: Number of user mentions
+big_break()
+train['mention_count'] = train['tweet'].apply(lambda tweet: len([x for x in tweet.split() if x.startswith('@')]))
+print('Added user mention count')
+print(train[['tweet', 'mention_count']].head())
